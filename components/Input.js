@@ -6,7 +6,7 @@ export default function Input() {
       <img
         src="/me.jpg"
         alt="user-img"
-        className="h-11 rounded-full cursor-pointer hover:brightness-95"
+        className="h-11 w-11 rounded-full cursor-pointer hover:brightness-95"
       />
       <div className="w-full divide-y divide-gray-200">
         <div className="">
