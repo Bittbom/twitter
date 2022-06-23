@@ -3,7 +3,7 @@ import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
-  apiKey: process.env.FIREBASE_API_KEY,
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
   authDomain: "twitter-9fae2.firebaseapp.com",
   projectId: "twitter-9fae2",
   storageBucket: "twitter-9fae2.appspot.com",
