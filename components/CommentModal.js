@@ -32,7 +32,7 @@ export default function CommentModal() {
   }, [postId, db]);
 
   async function sendComment() {
-    await addDoc(collection(db, "posts", postId, "comment"), {
+    await addDoc(collection(db, "posts", postId, "comments"), {
       comment: input,
       name: session.user.name,
       username: session.user.username,
