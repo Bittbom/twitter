@@ -1,10 +1,18 @@
 import { useRecoilState } from "recoil";
+import { useRouter } from "next/router";
 import { modalState, postIdState } from "../atom/modalAtom";
 import Modal from "react-modal";
 import { XIcon } from "@heroicons/react/outline";
 import { useEffect, useState } from "react";
 import { db } from "../firebase";
-import { doc, onSnapshot, docs } from "firebase/firestore";
+import {
+  doc,
+  onSnapshot,
+  docs,
+  addDoc,
+  collection,
+  serverTimestamp,
+} from "firebase/firestore";
 import Moment from "react-moment";
 import { useSession } from "next-auth/react";
 import { EmojiHappyIcon, PhotographIcon } from "@heroicons/react/outline";
@@ -14,8 +22,8 @@ export default function CommentModal() {
   const [postId] = useRecoilState(postIdState);
   const [post, setPost] = useState({});
   const [input, setInput] = useState("");
-
   const { data: session } = useSession();
+  const router = useRouter();
 
   useEffect(() => {
     onSnapshot(doc(db, "posts", postId), (snapshot) => {
@@ -23,7 +31,18 @@ export default function CommentModal() {
     });
   }, [postId, db]);
 
-  function sendComment() {}
+  async function sendComment() {
+    await addDoc(collection(db, "posts", postId, "comment"), {
+      comment: input,
+      name: session.user.name,
+      username: session.user.username,
+      userImg: session.user.image,
+      timestamp: serverTimestamp(),
+    });
+    setOpen(false);
+    setInput("");
+    router.push(`posts/${postId}`);
+  }
 
   return (
     <div>
